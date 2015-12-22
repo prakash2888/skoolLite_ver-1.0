@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>AdminLTE 2 | Dashboard</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- Bootstrap 3.3.4 -->
+    <% include commons/css.ejs %>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/dataTables.bootstrap.css">
+  </head>
+  <!--
+  BODY TAG OPTIONS:
+  =================
+  Apply one or more of the following classes to get the
+  desired effect
+  |---------------------------------------------------------|
+  | SKINS         | skin-blue                               |
+  |               | skin-black                              |
+  |               | skin-purple                             |
+  |               | skin-yellow                             |
+  |               | skin-red                                |
+  |               | skin-green                              |
+  |---------------------------------------------------------|
+  |LAYOUT OPTIONS | fixed                                   |
+  |               | layout-boxed                            |
+  |               | layout-top-nav                          |
+  |               | sidebar-collapse                        |
+  |               | sidebar-mini                            |
+  |---------------------------------------------------------|
+  -->
+  <body class="skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      <!-- Main Header -->
+      <% include commons/header.ejs %>
+      <!-- Left side column. contains the logo and sidebar -->
+     <% include commons/sidebar.ejs %>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+       
+
+        <!-- Main content -->
+        <section class="content">
+
+          <!-- Your Page Content Here -->
+          <div class="box">
+                <div class="box-header">
+                  <div cass="row">
+                     <div class="col-md-12">
+                       
+                        <div class="col-md-6">
+                           <label class="col-md-3" style="text-align: right;padding:2px 2px;">Select class :</label>
+                          <div class="col-md-2" style="padding:2px 2px;">
+                            <select id="classLevel" name="classLevel" >
+                          <option value="">--select--</option>
+                          <option value="I">I</option>
+                          <option value="II">II</option>
+                          <option value="III">III</option>
+                          <option value="IV">IV</option>
+                          <option value="V">V</option>
+                          <option value="VI">VI</option>
+                          <option value="VII">VII</option>
+                          <option value="IIX">IIX</option>
+                          <option value="IX">IX</option>
+                          <option value="X">X</option>
+                       </select>
+                     </div>
+                     <label class="col-md-2" style="text-align: right;padding:2px 2px;">Section :</label>
+                          <div class="col-md-2" style="padding:2px 2px;">
+                            <select id="section" name="section" >
+                          <option value="">--select--</option>
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                          <option value="C">C</option>
+                          <option value="D">D</option>
+                          <option value="E">E</option>
+                            </select>
+                     </div>
+                       <div class="col-md-2">
+                        <button class="btn btn-primary" style="padding:2px 12px;" id="go">Go</button>
+                       </div>
+                       
+                        </div>
+
+                        <div class="col-md-6"> 
+                          <div class="col-md-9">
+                            <input type="text" class="form-control" placeholder="Student Name" id="demo1">
+                           </div>
+                           
+                        </div>
+
+                     </div> 
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding" id="studentsTable">
+                </div><!-- /.box-body -->
+              </div>
+
+              <!-- Student Details on selection of search results in Model  -->
+              <div class="modal fade" id="studentInfo" > 
+              <div class="modal-dialog" style="width:60%;">
+                <div class="modal-content" id="studentInfo-body">
+
+                </div><!-- /.modal-content -->
+
+              </div><!-- /.modal-dialog -->
+            </div>
+
+            <!-- Payment Modal start here-->
+            <div class="modal fade" id="makePayment" > 
+              <div class="modal-dialog" style="width:60%;">
+                <div class="modal-content" id="makePayment-body">
+
+                </div><!-- /.modal-content -->
+
+              </div><!-- /.modal-dialog -->
+            </div>
+        </section><!-- /.content -->
+        
+      </div><!-- /.content-wrapper -->
+
+      <% include commons/footer.ejs %>
+      
+      
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class='control-sidebar-bg'></div>
+    </div><!-- ./wrapper -->
+
+    <!-- REQUIRED JS SCRIPTS -->
+
+      <% include commons/scripts.ejs %>
+      <script type="text/javascript" src="/dashboard.js"></script>
+      <script type="text/javascript" src="/bootstrap/js/jquery.dataTables.min.js"></script>
+      <script type="text/javascript" src="/bootstrap/js/dataTables.bootstrap.min.js"></script>
+       <script type="text/javascript" src="/bootstrap/js/bootstrap-typeahead.js"></script>
+       <script type="text/javascript" src="/makePayment.js"></script>
+       <script type="text/javascript">
+       $('#demo1').typeahead({
+                    ajax: {
+                        url: '/admin/searchStudent',
+                        method: 'post',
+                        triggerLength: 1
+                    },
+                    displayField:"studentName",
+                    valueField:"_id",
+                    onSelect:function(item){
+                     // console.log(item);
+                      findStudent(item.value); 
+                    }
+                });
+       </script>
+      </body>
+</html>

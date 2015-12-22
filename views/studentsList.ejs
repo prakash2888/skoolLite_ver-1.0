@@ -1,0 +1,58 @@
+<table class="table no-margin" id="example2">
+  <thead>
+    <tr>
+      <th>#NO</th>
+      <th>Photo</th>
+      <th>Student Name</th>
+      <th>Class</th>
+      <th>Section</th>
+      <th>Contact No</th>
+      <th>Mobile Code</th>
+      <th>Annual Fee</th>
+      <th>Notification</th>
+      <th>Action</th>   
+    </tr>
+  </thead>
+<tbody>
+
+  <% for (var i=0;i<result.length;i++){
+    %>
+    <tr >
+      <td><%= (i+1) %></td>
+      <td style="cursor:pointer;" onclick="findStudent('<%=result[i]._id %>')"><img src='<%=result[i].photoPath %>' width='40px;' height='40px;' class='img-circle'/></td>
+      <td style="cursor:pointer;" onclick="findStudent('<%=result[i]._id %>')"><%= result[i].studentName %></td>
+      <td style="cursor:pointer;" onclick="findStudent('<%=result[i]._id %>')"><%= result[i].classLevel %></td>
+      <td style="cursor:pointer;" onclick="findStudent('<%=result[i]._id %>')"><%= result[i].section %></td>
+      <td style="cursor:pointer;" onclick="findStudent('<%=result[i]._id %>')"><%= result[i].contact%></td>
+      <td><%= result[i].sec_code %>
+      <td><%= result[i].annualFee %></td>
+      <% if(result[i].notify==1){
+        %>
+         <td><button class="btn btn-success btn-xs">On</button></td>
+        <%
+      }else{%>
+        <td><button class="btn btn-danger btn-xs">Off</button></td>
+        <%}
+       %>
+     
+      <td >
+        <a href="#" class="btn btn-warning btn-flat btn-xs" onclick="makePayment('<%=result[i]._id %>')">Make payment</a>  
+      </td>
+    </tr>
+    <%
+    } 
+  %>
+</tbody>
+</table>
+<SCRIPT TYPE="text/javascript">
+$(function(){
+  $('#example2').dataTable({
+          "bPaginate": true,
+          "bLengthChange": true,
+          "bFilter": true,
+          "bSort": true,
+          "bInfo": true,
+          "bAutoWidth": false
+        });
+})
+</SCRIPT>

@@ -1,0 +1,81 @@
+          <form id="feeForm">
+                  <div class="modal-header">
+                    <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span></button>
+                    <span class="modal-title"><b>Fee registraion form for <span class="text-success">
+                      <%= course%>
+                    </span></b></span>
+                  </div>
+                 
+                  <div class="modal-body">
+                   <div class="row">
+                    <div class="col-md-12">
+                    <% for (var i=0; i<result.length;i++){ %>
+                    <div class="form-group row">
+                      <label for="annualFee" class="col-xs-3"><%= result[i] %> Fee</label>
+                      <div class="col-xs-6">
+                      <input type="text" placeholder="Enter <%= result[i] %> fee"  name="<%= result[i] %>" class="form-control numberOnly fee" value="">
+                      </div>
+                    </div>
+                    <%} %>
+                    <div class="form-group row">
+                      <label for="annualFee" class="col-xs-3">Annual Fee</label>
+                      <div class="col-xs-6">
+                      <input type="text" name="annualFee" class="form-control " value="" readonly="readonly">
+                      </div>
+                    </div>
+                    </div>
+                   </div>
+                  </div><!-- Model-body end here-->
+
+                  <input type="hidden" value="<%= course %>" name="course">
+                  <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default pull-left" type="button">Close</button>
+                    <button class="btn btn-primary" type="button" id="saveFee">Save Fee</button>
+                  </div>
+                </form>
+<script type="text/javascript">
+  $(function(){
+
+    $(".numberOnly").keypress(function (e) {
+     //if the letter is not digit then display error and don't type anything
+     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+       
+               return false;
+    }
+   });
+
+    $(".numberOnly").keyup(function(e){
+
+     var fees=[]
+        $(".fee").each(function(){
+          if(this.value.length!=0)
+          fees.push(this.value);
+        });
+        console.log(fees) 
+        var sumOfFee=fees.reduce(function(a,b){
+          return Number(a)+Number(b);
+        },0);
+         $("input[name=annualFee]").val(sumOfFee);
+    
+    })
+
+      $("#saveFee").on("click",function(){
+       
+        var formData=$("#feeForm").serialize();
+        console.log(formData);
+        $.ajax({
+          type:"POST",
+          url:"/admin/saveFeeDetails/",
+          data:formData,
+          success:function(resp){
+            console.log(resp);
+            if(resp.status){
+              $("#regFrom").modal('hide');
+            }
+          },error:function(ex){
+            console.log(ex);
+          }
+        });
+      })
+  });
+</script>

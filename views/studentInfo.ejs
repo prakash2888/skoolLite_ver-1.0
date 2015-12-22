@@ -1,0 +1,126 @@
+
+                  <div class="modal-header">
+                    <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span></button>
+                    <span class="modal-title"><b>Student Info:</b></span>
+                  </div>
+                 
+                  <div class="modal-body">
+                     <% if(status==true){%>
+                    <div class="row">
+                    <table class="table no-margin">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Student Name</th>
+                                <th>Gender</th>
+                                <th>Class</th>
+                                <th>Section</th>
+                                <th>Contact</th>
+                                <th>Fee Terms</th>
+                                <th>Annual Fee</th>
+                                <th>Student Code</th>
+                                <th>Registration Date</th>
+                            </tr>
+                        </thead>  
+                        <tbody>
+                             <tr>
+                                <td><img src='<%=result.photoPath %>' width='40px;' height='40px;' class='img-circle'/></td>
+                                <td><%= result.studentName %></td>
+                                <td><%= result.gender%>
+                                <td><%= result.classLevel %></td>
+                                <td><%= result.section %></td>
+                                <td><%= result.contact %></td>
+                                <td><%= result.feeInterval%></td>
+                                <td><%= result.annualFee %></td>
+                                <td><%= result.sec_code%></td>
+                                <td><%= result.regDate%></td>
+                             </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <!--Paren Info -->
+                    <% if(result.parents.length!=0){%>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h4><b>Parent Info:</b></h4>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-12">                    
+                    <table class="table no-margin">
+                      <thead>
+                        <tr>
+                          <th>Photo</th>
+                          <th>Parent Name</th>
+                          <th>Contact No</th>
+                          <th>Relation</th>
+                          <th>Gender</th>
+                          <th>Address</th>
+                        </tr>
+                      </thead> 
+                      <tbody>
+                           <% for(var i=0; i<result.parents.length;i++){
+                            %>
+                            <tr>
+                              <td><img src="<%=result.parents[i].parent_photo_path%>" width='40px;' height='40px;' class="img-circle"></td>
+                              <td>
+                                <%=result.parents[i].parent_name%>
+                              </td>
+                              <td><%= result.parents[i].parent_phone%></td>
+                              <td><%= result.parents[i].parent_relation%></td>
+                              <td><%= result.parents[i].parent_gender%></td>
+                              <td><%= result.parents[i].parent_address%></td>
+                            </tr>
+                            <%
+                           } %> 
+                      </tbody> 
+                    </table>
+                  </div><!-- Parent Info  -->
+                    <%}else{%>
+                      <div class="row">
+                      <div class="col-md-12" style="color:red;">
+                        <h4><b>Parent not yet registred</b></h4>
+                      </div>
+                    </div>
+                    <%}%>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="col-md-12">
+                         <h4> <b> Due Dates</b></h4>
+                        </div>
+                        <div class="col-md-6">
+                        <ul class="list-group">
+                        <% for(var i=0; i<result.dueDates.length; i++){%>
+                          <li class="list-group-item">
+                              <%= result.dueDates[i]%> 
+                          </li>                       
+                       
+                         <%}%>
+                       </ul>
+                     </div>
+                      </div>
+                     <div class="col-md-6">
+                        <div class="col-md-12">
+                          <h4><b>Payment Dates</b></h4>
+                        </div>
+                     </div>
+                    </div>
+                    <%}%>
+                  </div><!-- Model-body end here-->
+
+
+                  <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default pull-left" type="button">Close</button>
+                    <button class="btn btn-primary" type="button" onclick="showPaymentModal('<%=result._id %>')">Make Payment</button>
+                  </div>
+
+  <script type="text/javascript">
+  $(function(){
+
+  });
+  var showPaymentModal=function(studentId){
+    $("#studentInfo").modal('hide');
+    makePayment(studentId);
+  };
+  </script>                
